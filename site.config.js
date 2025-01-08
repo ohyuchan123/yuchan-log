@@ -4,10 +4,10 @@ const CONFIG = {
     name: "oh yuchan",
     image: "/avatar.svg", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "Backend developer",
-    bio: "저는 현재 스프링 프레임워크를 통해 백엔드 개발을 하고 있고 나중에 DevOps 엔지니어가 되는 것을 목표하고 있습니다.",
+    bio: "DevOps 엔지니어가 꿈인 백엔드 뉴비",
     email: "oyuchan@gmail.com",
     linkedin: "https://www.linkedin.com/in/%EC%9C%A0%EC%B0%AC-%EC%98%A4-48bb2030a/",
-    github: "ohyuchan",
+    github: "ohyuchan123",
     instagram: "oyuchan50",
   },
   projects: [

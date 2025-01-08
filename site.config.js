@@ -4,7 +4,7 @@ const CONFIG = {
     name: "oh yuchan",
     image: "/apple-touch-icon.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "Backend developer",
-    bio: "",
+    bio: "Java와 Kotlin을 활용하여 백엔드를 구축합니다.",
     email: "oyuchan@gmail.com",
     linkedin: "https://www.linkedin.com/in/%EC%9C%A0%EC%B0%AC-%EC%98%A4-48bb2030a/",
     github: "ohyuchan123",

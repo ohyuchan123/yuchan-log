@@ -28,8 +28,12 @@ export function filterPosts({
       )
     })
     .sort((a, b) => {
-      const dateA = new Date(a.date.start_date).getTime()
-      const dateB = new Date(b.date.start_date).getTime()
-      return order === "desc" ? dateB - dateA : dateA - dateB
+      // null 체크를 추가하여 안전하게 처리
+      const dateA = a.date?.start_date ? new Date(a.date.start_date) : new Date(0)
+      const dateB = b.date?.start_date ? new Date(b.date.start_date) : new Date(0)
+      
+      return order === "desc" 
+        ? dateB.getTime() - dateA.getTime()
+        : dateA.getTime() - dateB.getTime()
     })
 }

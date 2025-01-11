@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://yuchan-log.vercel.app
+
+# Sitemaps
+Sitemap: https://yuchan-log.vercel.app/sitemap.xml

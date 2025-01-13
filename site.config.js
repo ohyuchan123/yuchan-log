@@ -6,7 +6,7 @@ const CONFIG = {
     role: "Backend developer",
     bio: "Java와 Kotlin을 활용하여 백엔드를 구축합니다.",
     email: "oyuchan@gmail.com",
-    linkedin: "https://www.linkedin.com/in/%EC%9C%A0%EC%B0%AC-%EC%98%A4-48bb2030a/",
+    linkedin: "https://www.linkedin.com/in/ohyuchan/",
     github: "ohyuchan123",
     instagram: "oyuchan50",
   },

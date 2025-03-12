@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
 
     // API 요청 오류 처리 추가
-    let recordMap
+    let recordMap: any 
     try {
       recordMap = await getRecordMap(postDetail.id)
     } catch (apiError) {

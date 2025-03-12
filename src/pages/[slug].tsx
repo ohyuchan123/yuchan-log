@@ -18,36 +18,58 @@ const filter: FilterPostsOptions = {
 }
 
 export const getStaticPaths = async () => {
-  const posts = await getPosts()
-  const filteredPost = filterPosts(posts, filter)
-
+  // 모든 경로를 빌드 시점에 생성하지 않도록 변경
   return {
-    paths: filteredPost.map((row) => `/${row.slug}`),
-    fallback: true,
+    paths: [], // 빌드 시 아무 페이지도 생성하지 않음
+    fallback: 'blocking', // 사용자 요청 시 서버에서 페이지 생성
   }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const slug = context.params?.slug
+  try {
+    const slug = context.params?.slug
 
-  const posts = await getPosts()
-  const feedPosts = filterPosts(posts)
-  await queryClient.prefetchQuery(queryKey.posts(), () => feedPosts)
+    const posts = await getPosts()
+    const feedPosts = filterPosts(posts)
+    await queryClient.prefetchQuery(queryKey.posts(), () => feedPosts)
 
-  const detailPosts = filterPosts(posts, filter)
-  const postDetail = detailPosts.find((t: any) => t.slug === slug)
-  const recordMap = await getRecordMap(postDetail?.id!)
+    const detailPosts = filterPosts(posts, filter)
+    const postDetail = detailPosts.find((t: any) => t.slug === slug)
+    
+    // postDetail이 없는 경우 처리
+    if (!postDetail || !postDetail.id) {
+      return {
+        notFound: true, // 404 페이지 표시
+      }
+    }
 
-  await queryClient.prefetchQuery(queryKey.post(`${slug}`), () => ({
-    ...postDetail,
-    recordMap,
-  }))
+    // API 요청 오류 처리 추가
+    let recordMap
+    try {
+      recordMap = await getRecordMap(postDetail.id)
+    } catch (apiError) {
+      console.error('API 요청 오류:', apiError)
+      return {
+        notFound: true,
+      }
+    }
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: CONFIG.revalidateTime,
+    await queryClient.prefetchQuery(queryKey.post(`${slug}`), () => ({
+      ...postDetail,
+      recordMap,
+    }))
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+      revalidate: CONFIG.revalidateTime,
+    }
+  } catch (error) {
+    console.error('getStaticProps 오류:', error)
+    return {
+      notFound: true, // 오류 발생 시 404 페이지 표시
+    }
   }
 }
 
